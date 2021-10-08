@@ -1,4 +1,4 @@
-[![WheelHub](https://wheelhub.es/_nuxt/img/logo@2x.ff6c894.png)](https://wheelhub.es/)
+[![WheelHub](https://wheelhub.es/logo/Logotipo-Vertical-Negro-Alta.png)](https://wheelhub.es/)
 
 # Test backend
 
@@ -35,10 +35,8 @@ Para realizar las pruebas y validar que el endpoint funciona correctamente, debe
 
 ---
 
-Una vez finalizado el test, suba la prueba a una cuenta de github propia con acceso público al repositorio, y comparta el link a los siguientes correos:
+Una vez finalizado el test, suba la prueba a una cuenta de github propia con acceso público al repositorio, y compartanos el link a nuestros correos.
 
-- rodrigo.vassia@wheelhub.es
-- imma.herrera@wheelhub.es
 
 ### Requisitos
 - [Node.js]
