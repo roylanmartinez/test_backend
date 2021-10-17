@@ -4,19 +4,15 @@ import { createConnection } from "typeorm"
 import * as path from "path"
 const root: string = path.resolve(__dirname, "..")
 
-const createUser = async (body: any) => {
-    console.log("entered")
-    
+const createUser = async (body: any) => {    
     const connection = await createConnection({
         type: "sqlite",
         database: `${root}/data/line.sqlite`,
         entities: [ User ],
         logging: true,
-        synchronize: true,
     })
 
     const userRepository = connection.getRepository(User)
-    console.log("error")
     let status: number;
     let message: string;
 
