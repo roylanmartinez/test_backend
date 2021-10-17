@@ -31,47 +31,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var CryptoJS = require("crypto-js");
 const User_1 = __importDefault(require("../models/User"));
 const typeorm_1 = require("typeorm");
 const path = __importStar(require("path"));
 const root = path.resolve(__dirname, "..");
-const options = {
-    type: "sqlite",
-    database: `${root}/data/line.sqlite`,
-    entities: [User_1.default],
-    logging: true,
-    synchronize: true,
-};
 const createUser = (body) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("entered");
-    const connection = yield (0, typeorm_1.createConnection)(options);
+    const connection = yield (0, typeorm_1.createConnection)({
+        type: "sqlite",
+        database: `${root}/data/line.sqlite`,
+        entities: [User_1.default],
+        logging: true,
+        synchronize: true,
+    });
     const userRepository = connection.getRepository(User_1.default);
     console.log("error");
-    let code;
+    let status;
     let message;
     const { username, password } = body;
     if (typeof username === "string" && typeof password === "string") {
-        // const timber = await userRepository.findOne({ username }).then((d)=>{
-        //     console.log("asdf")
-        // }).catch(e=>console.log("errorrrr"));
-        const timber = yield userRepository.find({ where: [username] });
-        console.log("found", timber);
-        code = 200;
+        status = 200;
         message = "El usuario se creó correctamente";
-        // const user = new User();
-        // user.username = username;
-        // const ciphertext = CryptoJS.AES.encrypt(password, 'secretwheelhub').toString();
-        // user.password = ciphertext;
-        // await userRepository.save(user)
+        const user = new User_1.default();
+        user.username = username;
+        const ciphertext = CryptoJS.AES.encrypt(password, 'secretwheelhub').toString();
+        user.password = ciphertext;
+        yield userRepository.save(user);
+        const justCreateUser = yield userRepository.findOne({ username });
+        console.log(justCreateUser);
     }
     else {
-        code = 400;
+        status = 400;
         message = "Nombre de usuario o contraseña inválidos";
     }
-    console.log({ code,
-        message });
+    yield connection.close();
     return {
-        code,
+        status,
         message
     };
 });

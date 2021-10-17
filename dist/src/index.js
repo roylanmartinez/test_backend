@@ -28,7 +28,8 @@ app.use((req, res, next) => {
 // define a route handler for the default home page
 app.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, createUser_1.default)(req.body).then((createUserResult) => {
-    }).catch((error) => console.log(1));
+        res.status(createUserResult.status).send(createUserResult);
+    }).catch((error) => res.status(500).send("Oops! Algún error ha ocurrido en el servidor"));
 }));
 // start the Express server
 app.listen(port, () => {
